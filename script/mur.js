@@ -22,7 +22,7 @@ async function carregarImatges() {
         const div = document.createElement("div");
         div.className = "imatge";
         div.innerHTML = `
-        <img src="${img.img_url}" alt="${img.img_titol}" loading="lazy">
+        <a href="/view/imatges.php?id=${img.id}"><img src="${img.img_url}" alt="${img.img_titol}" loading="lazy"></a>
         `;
         mur.appendChild(div);
     });
