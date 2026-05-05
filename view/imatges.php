@@ -2,7 +2,7 @@
 
 <h1 class="titol">Imatge</h1>
 
-<div id="imatge" class="imatge"></div>
+<div id="imatge-container" class="imatge-detail"></div>
 
 <script>
   function getParam(param) {
@@ -10,79 +10,85 @@
     return urlParams.get(param);
   }
 
-  let id = getParam('id');
-  let url = id ? `/api/imatgesApi.php?id=${id}` : "/api/imatgesApi.php?id=1"; // ID de la imatge per defecte 1
+  const id = getParam('id')|| 1;
+  const url = `../api/imatgesApi.php?id=${id}`;
 
   fetch(url)
-    .then(response => response.json())
+    .then(r => r.json())
     .then(data => {
-      const container = document.getElementById("imatge");
+      const container = document.getElementById('imatge-container');
 
-      if (data) {
-        const imatge = data;
-
-        const div = document.createElement("div");
-        div.className = "imatge";
-        div.innerHTML = `
-          <img src="${imatge.img_url}" alt="${imatge.img_titol}" loading="lazy">
-        `;
-        container.appendChild(div);
-      } else {
-        container.innerHTML = "<p>Error al obtenir les dades de l'API.</p>";
-      }
-    })
-    .catch(error => {
-      document.getElementById("imatge").innerHTML =
-        "<p>Error de connexió a l'API.</p>";
-      console.error(error);
-    });
-</script>
-
-
-      if (data) {
-        const product = data;
-
-        const div = document.createElement("div");
-        div.className = "producte";
-        div.innerHTML = `
-          <img src="${product.image}" alt="Imatge del producte">
-          <div class="producte-info">
-            <h4>${product.title}</h4>
-            <p class="preu">Preu: $${product.price}</p>
-            <p>${product.description}</p>
-            <p class="categoria">Categoria: <a href="veureProductesCategoria.php?categoria=${encodeURIComponent(product.category)}">${product.category}</a></p>
-            <p class="rating">Puntuació: ${product.rating.rate} (${product.rating.count} valoracions)</p>
-            <?php if ($usuariLoguejat): ?>
-              <a href="editarProducte.php?id=${product.id}">Modificar</a>
-              <button onclick="eliminarProducte(${product.id})">Eliminar</button>
-            <?php endif; ?>
+      if(data && !data.error) {
+        const arrodonit = Math.round(data.valoracio);
+        let resultat = '';
+        for(let i = 1; i <= 5; i++) {
+          if(i <= arrodonit) {
+            resultat += '⭐';
+          }else {
+            resultat += '☆';
+          }
+        }
+        const estrellesHTML = resultat;
+        container.innerHTML = `
+          <div class="imatge-card">
+            <img src="${data.img_url}" alt="${data.img_titol}" loading="lazy">
+            <div class="imatge-info">
+              <h2>${data.img_titol}</h2>
+              <div class="valoracio-actual">
+                <span class="valoracio-numero">${estrellesHTML} (${data.valoracio})</span>
+                <span class="num-votacions">(${data.num_votacio} valoracions)</span>
+              </div>
+              <select id="select-estrelles">
+                <option value="" disabled selected>-- Valorar --</option>
+                <option value="1">⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="5">⭐⭐⭐⭐⭐</option>
+              </select>
+              <button id="btn-valorar" disabled>Valorar</button>
+              <p id="missatge-valoracio"></p>
+            </div>
           </div>
         `;
-        container.appendChild(div);
-      } else {
-        container.innerHTML = "<p>Error al obtenir les dades de l'API.</p>";
+
+        const selectEstrelles = document.getElementById('select-estrelles');
+        const btnValorar = document.getElementById('btn-valorar');
+
+        selectEstrelles.addEventListener('change', () => {
+          btnValorar.disabled = selectEstrelles.value === '';
+        });
+
+        btnValorar.addEventListener('click', () => {
+          const estrelles = parseInt(selectEstrelles.value);
+          fetch('../api/imatgesApi.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: parseInt(id), estrelles })
+          })
+          .then(r => r.json())
+          .then(res => {
+            if(res.imatge) {
+              document.querySelector('.valoracio-numero').textContent = res.imatge.valoracio + ' ⭐';
+              document.querySelector('.num-votacions').textContent = `(${res.imatge.num_votacio} valoracions)`;
+              document.getElementById('missatge-valoracio').textContent = 'Valoració enviada!';
+              btnValorar.disabled = true;
+            }else {
+              document.getElementById('missatge-valoracio').textContent = 'Error: ' + (res.error || 'desconegut');
+            }
+          })
+          .catch(() => {
+            document.getElementById('missatge-valoracio').textContent = 'Error de connexió.';
+          });
+        });
+
+      }else {
+        container.innerHTML = `<p>Error: ${data.error || 'Imatge no trobada.'}</p>`;
       }
     })
-    .catch(error => {
-      document.getElementById("producte-container").innerHTML =
-        "<p>Error de connexió a l'API.</p>";
-      console.error(error);
-    });
-    
-    function eliminarProducte(id) {
-      if (confirm("Estàs segur que vols eliminar aquest producte?")) {
-        fetch(`../api/productes.php?id=${id}`, {
-          method: "DELETE"
-        })
-        .then(() => {
-          alert("Producte eliminat correctament!");
-          location.reload();
-        })
-        .catch(error => {
-          console.error("Error:", error);
-        });
-      }
-    }
+  .catch(() => {
+    document.getElementById('imatge-container').innerHTML = "<p>Error de connexió a l'API.</p>";
+  });
 </script>
 
 <?php include_once __DIR__ . '/../includes/footer.php'; ?>
