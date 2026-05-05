@@ -22,10 +22,9 @@ async function carregarImatges() {
         const div = document.createElement("div");
         div.className = "imatge";
         div.innerHTML = `
-        <img src="${img.img_url}" alt="${img.img_titol}">
-        <p>${img.img_titol}</p>
-    `;
-            mur.appendChild(div);
+        <img src="${img.img_url}" alt="${img.img_titol}" loading="lazy">
+        `;
+        mur.appendChild(div);
     });
 
     offset += limit;
