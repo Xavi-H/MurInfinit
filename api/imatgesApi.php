@@ -1,5 +1,5 @@
 <?php
-$db = new SQLite3("../dataBase/galeria.sqlite");
+$db = new SQLite3("../dataBase/imatges.db");
 
 $limit = $_GET['limit'] ?? 30;
 $offset = $_GET['offset'] ?? 0;
