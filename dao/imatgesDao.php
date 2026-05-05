@@ -22,7 +22,7 @@ function getImatgeById($id, $db) {
 }
 
 function valorarImatge($id, $estrelles, $db) {
-    $imatge = getImatgeById($id);
+    $imatge = getImatgeById($id, $db);
     if(!$imatge) return false;
 
     $numVotacio = $imatge['num_votacio'] + 1;
@@ -36,5 +36,5 @@ function valorarImatge($id, $estrelles, $db) {
     $stmt->bindValue(':id', (int)$id, SQLITE3_INTEGER);
     $stmt->execute();
 
-    return getImatgeById($id);
+    return getImatgeById($id, $db);
 }
