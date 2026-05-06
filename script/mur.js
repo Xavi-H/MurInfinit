@@ -20,6 +20,7 @@ async function carregarImatges() {
 
     imatges.forEach(img => {
         const div = document.createElement("div");
+        div.id = 'imgAbansDeFiltrar'; // Per quan es filtri, s'esborrin aquestes
         div.className = "imatge";
         div.dataset.id = img.id;
         div.innerHTML = `

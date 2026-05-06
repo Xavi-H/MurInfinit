@@ -10,12 +10,6 @@ switch($_SERVER['REQUEST_METHOD']) {
 
         $cerca = isset($body['cerca'])? $body['cerca']: null;
 
-        // Seguretat (falla)
-        if($cerca === null) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Falten camps: cerca']);
-            exit;
-        }
 
         $resultat = cercaImatgeAlVol($cerca, $db);
 

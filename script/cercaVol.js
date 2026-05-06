@@ -14,6 +14,7 @@ async function cercaVol(){
     const mur = document.getElementById("mur");
     imatges.forEach(img => {
         const div = document.createElement("div");
+        div.id = 'imgAbansDeFiltrar'; // Per quan es filtri, s'esborrin aquestes
         div.className = "imatge";
         div.dataset.id = img.id;
         div.innerHTML = `
@@ -21,7 +22,9 @@ async function cercaVol(){
                 <img src="${img.img_url}" alt="${img.img_titol}" loading="lazy">
             </a>
         `;
-        mur.appendChild(div);
+        const divSenseCercar = document.getElementById('imgAbansDeFiltrar');
+        mur.removeChild(divSenseCercar); // Esborra les imatges antigues
+        mur.appendChild(div); // Afageix les noves
     });
     offset += limit;
     loading = false;
