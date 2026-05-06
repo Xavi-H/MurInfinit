@@ -1,4 +1,5 @@
 <?php include_once __DIR__ . '/includes/head.php'; ?>
+<?php include_once __DIR__ . '/includes/header.php'; ?>
 
 <h1 class="titol">MUR D'IMATGES</h1>
 
