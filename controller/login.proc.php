@@ -9,7 +9,7 @@ $input = json_decode(file_get_contents("php://input"), true);
 
 // Obté les credencials o assigna buit si no existeixen
 $nom = $input["nom"]?? "";
-$contrasenya = $input["contrassenya"]?? "";
+$contrasenya = $input["contrasenya"]?? "";
 
 // Comprova que s'han enviat dades
 if($nom && $contrasenya) {
@@ -20,7 +20,7 @@ if($nom && $contrasenya) {
     $usuari = $result->fetchArray(SQLITE3_ASSOC);
 
     // Verifica usuari i contrasenya
-    if ($usuari && $usuari["contrassenya"] === md5($contrasenya)) {
+    if ($usuari && $usuari["contrasenya"] === md5($contrasenya)) {
         // Es crea el header del token JWT
         $header = base64_encode(json_encode(["alg" => "HS256", "typ" => "JWT"]));
 
