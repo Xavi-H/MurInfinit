@@ -147,3 +147,18 @@ $db->exec("INSERT INTO imatges (img_titol, img_url, valoracio, num_votacio, par_
 ('Paris Montmartre', 'https://images.unsplash.com/photo-1503917988258-f87a78e3c995?w=800', 4.7, 510, 'viajes'),
 ('Nueva Zelanda lago', 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800', 5.0, 1800, 'viajes'),
 ('Los Angeles Letrero', 'https://images.unsplash.com/photo-1515895309288-a3815ab7cf81?w=800', 4.6, 740, 'viajes')");
+
+
+
+// Crear la taula imatges
+$db->exec("CREATE TABLE IF NOT EXISTS usuaris (
+    usuari TEXT,
+    contrasenya TEXT
+)");
+
+
+$contrasenya = md5('asd123');
+
+$db->exec("INSERT INTO usuaris (usuari, contrasenya) VALUES 
+('Adan', '$contrasenya'),
+('Xavi', 'asd123')");
