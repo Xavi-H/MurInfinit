@@ -38,3 +38,16 @@ function valorarImatge($id, $estrelles, $db) {
 
     return getImatgeById($id, $db);
 }
+
+function cercaImatgeAlVol($cerca, $db) {
+    $consulta = "SELECT * FROM imatges WHERE LOWER(par_clau) LIKE LOWER(:cerca)";
+    $stmt = $db->prepare($consulta);
+    $stmt->bindValue(':cerca', "%$cerca%", SQLITE3_TEXT);
+    $result = $stmt->execute();
+
+    $imatges = [];
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        $imatges[] = $row;
+    }
+    return $imatges;
+}

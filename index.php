@@ -2,6 +2,10 @@
 
 <h1 class="titol">MUR D'IMATGES</h1>
 
+<form action="api/cercaVol.php" method="POST" id="cerca-form">
+    <textarea name="cerca" id="cerca" placeholder="🔍 Comença a buscar..."></textarea>
+    <button type="submit">Enviar</button>
+</form>
 <main>
     <div id="mur" class="mur"></div>
 
