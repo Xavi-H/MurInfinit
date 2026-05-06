@@ -1,4 +1,7 @@
-<?php include_once __DIR__ . '/../includes/head.php'; ?>
+<?php
+include_once __DIR__ . '/../includes/head.html';
+include_once __DIR__ . '/../includes/header.php';
+?>
 
 <h1 class="titol">Imatge</h1>
 
@@ -91,4 +94,4 @@
   });
 </script>
 
-<?php include_once __DIR__ . '/../includes/footer.php'; ?>
+<?php include_once __DIR__ . '/../includes/footer.html'; ?>

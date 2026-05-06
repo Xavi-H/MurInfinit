@@ -1,5 +1,7 @@
-<?php include_once __DIR__ . '/includes/head.php'; ?>
-<?php include_once __DIR__ . '/includes/header.php'; ?>
+<?php
+include_once __DIR__ . '/includes/head.html';
+include_once __DIR__ . '/includes/header.php';
+?>
 
 <h1 class="titol">MUR D'IMATGES</h1>
 
@@ -19,4 +21,4 @@
 
 <script src="script/mur.js"></script>
 
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/includes/footer.html'; ?>
