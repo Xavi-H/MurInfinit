@@ -20,6 +20,7 @@
                 <a href="/controller/logout.proc.php" class="btn-link btn-logout">Logout</a>
             <?php else: ?>
                 <a href="/view/login.php" class="btn-link btn-login">Login</a>
+                <a href="/view/registre.php" class="btn-link btn-registre">Registre</a>
             <?php endif; ?>
         </div>
     </nav>

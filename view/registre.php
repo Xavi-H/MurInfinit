@@ -1,0 +1,29 @@
+<?php
+include_once __DIR__ . '/../includes/head.html';
+include_once __DIR__ . '/../includes/header.php';
+?>
+
+<div class="container">
+    <h3>REGISTRE</h3>
+    <!-- Contenidor per mostrar errors -->
+    <p class="error" id="missatge-error"></p>
+
+    <form class="formulari-edicio" id="form-registre">
+        <div class="camp">
+            <label for="nom">Nom d'usuari:</label>
+            <input type="text" id="nom" name="nom" required>
+        </div>
+        <div class="camp">
+            <label for="contrasenya">Contrasenya:</label>
+            <input type="password" id="contrasenya" name="contrasenya" required>
+        </div>
+        <div class="botons">
+            <button type="submit" id="btn-registre">Registrar</button>
+        </div>
+    </form>
+</div>
+
+<script src="../script/registre.js"></script>
+<?php
+include_once __DIR__ . ("/../includes/footer.html");
+?>
