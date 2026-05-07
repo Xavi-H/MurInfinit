@@ -57,8 +57,31 @@ switch($_SERVER['REQUEST_METHOD']) {
         }
         break;
 
+    case 'PATH':
+        $body = json_decode(file_get_contents('php://input'), true);
+        $id = isset($body['id'])? (int)$body['id']: null;
+
+        if($id === null) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Falta el camp "id"']);
+            exit;
+        }
+
+        $resultat = donarLike($id, $db);
+
+        if($resultat) {
+            echo json_encode([
+                'missatge' => 'Like registrat correctament',
+                'num_likes' => $resultat['num_likes']
+            ]);
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => "Imatge amb id $id no trobada"]);
+        }
+        break;
+
     default:
         http_response_code(405);
-        echo json_encode(['error' => 'Mètode no permès. Usa GET o POST.']);
+        echo json_encode(['error' => 'Mètode no permès.']);
         break;
 }

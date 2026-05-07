@@ -51,3 +51,11 @@ function cercaImatgeAlVol($cerca, $db) {
     }
     return $imatges;
 }
+
+function donarLike($id, $db) {
+    $sql = "UPDATE imatges SET num_likes = num_likes + 1 WHERE id = :id";
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(':id', (int)$id, SQLITE3_INTEGER);
+    $stmt->execute();
+    return getImatgeById($id, $db);
+}
