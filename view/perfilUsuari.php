@@ -4,8 +4,12 @@ include_once __DIR__ . '/../includes/head.html';
 include_once __DIR__ . '/../includes/header.php';
 ?>
 
-<div class="container">
-    <h3>PERFIL D'USUARI</h3>
+<div class="historial-wrapper">
+    <h1>El teu historial de Likes</h1>
     <p>Benvingut, <?= htmlspecialchars($usuari['nom']) ?>!</p>
-    <p>Aquí pots veure les imatges a les quals li has donat <strong>M'agrada</strong>.</p>
+    <p>Aquí pots veure totes les fotos que t'han agradat.</p>
+
+    <div class="loader">Carregant els teus favorits...</div>
 </div>
+
+<?php include_once __DIR__ . '/../includes/footer.html'; ?>
