@@ -15,6 +15,7 @@
         <div class="links">
             <?php if($usuari): ?>
                 <span class="salutacio">Hola, <?= htmlspecialchars($usuari['nom']) ?>!</span>
+                <a href="/view/historialLikes.php">Historial de likes</a>
                 <a href="/controller/logout.proc.php">Logout</a>
             <?php else: ?>
                 <a href="/view/login.php">Login</a>
