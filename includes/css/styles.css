@@ -58,3 +58,92 @@ body {
 
 
 /* header */
+:root {
+    --color-principal: #e60023; /* Rojo Pinterest */
+    --color-gris-fondo: #f0f0f0;
+    --color-texto: #111;
+    --fuente-base: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.capcalera {
+    background-color: #ffffff;
+    padding: 12px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.menu-nav {
+    display: flex;
+    justify-content: space-between; /* Logo a la izquierda, links a la derecha */
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Logo */
+.logo-img {
+    height: 32px;
+    width: auto;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.1);
+}
+
+/* Contenedor de enlaces */
+.links-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre elementos */
+    font-family: var(--fuente-base);
+}
+
+.salutacio-text {
+    font-size: 14px;
+    color: var(--color-texto);
+    margin-right: 10px;
+}
+
+/* Estilo general de botones/enlaces */
+.btn-link {
+    text-decoration: none;
+    color: var(--color-texto);
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 24px;
+    transition: background-color 0.3s ease;
+    font-size: 15px;
+}
+
+.btn-link:hover {
+    background-color: var(--color-gris-fondo);
+}
+
+/* Botones específicos */
+.btn-login {
+    background-color: var(--color-principal);
+    color: white;
+}
+
+.btn-login:hover {
+    background-color: #ad081b;
+}
+
+.btn-logout {
+    color: #5f5f5f;
+    font-size: 13px;
+}
+
+@media(max-width: 600px) {
+    .salutacio-text {
+        display: none;
+    }
+    
+    .menu-nav {
+        padding: 5px 0;
+    }
+}

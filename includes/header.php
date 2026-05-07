@@ -6,19 +6,20 @@
 ?>
 
 <header class="capcalera">
-    <nav class="menu">
-        <div class="logo">
+    <nav class="menu-nav">
+        <div class="logo-container">
             <a href="../index.php">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Pinterest_Logo_%282%29.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt="Logo" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Pinterest_Logo_%282%29.svg" alt="Logo" class="logo-img" />
             </a>
         </div>
-        <div class="links">
+
+        <div class="links-container">
             <?php if($usuari): ?>
-                <span class="salutacio">Hola, <?= htmlspecialchars($usuari['nom']) ?>!</span>
-                <a href="/view/historialLikes.php">Historial de likes</a>
-                <a href="/controller/logout.proc.php">Logout</a>
+                <span class="salutacio-text">Hola, <strong><?= htmlspecialchars($usuari['nom']) ?></strong>!</span>
+                <a href="/view/historialLikes.php" class="btn-link">Historial de likes</a>
+                <a href="/controller/logout.proc.php" class="btn-link btn-logout">Logout</a>
             <?php else: ?>
-                <a href="/view/login.php">Login</a>
+                <a href="/view/login.php" class="btn-link btn-login">Login</a>
             <?php endif; ?>
         </div>
     </nav>
