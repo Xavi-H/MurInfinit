@@ -1,4 +1,4 @@
-<?php include_once($_SERVER['DOCUMENT_ROOT'] . '/includes/auth.php'); ?>
+<?php include_once __DIR__ . '/../controller/auth.php'; ?>
 
 <?php
     // Valida el token per saber si hi ha un usuari autenticat
@@ -16,7 +16,7 @@
         <div class="links-container">
             <?php if($usuari): ?>
                 <span class="salutacio-text">Hola, <strong><?= htmlspecialchars($usuari['nom']) ?></strong>!</span>
-                <a href="/view/historialLikes.php" class="btn-link">Historial de likes</a>
+                <a href="/view/perfilUsuari.php" class="btn-link">Historial de likes</a>
                 <a href="/controller/logout.proc.php" class="btn-link btn-logout">Logout</a>
             <?php else: ?>
                 <a href="/view/login.php" class="btn-link btn-login">Login</a>

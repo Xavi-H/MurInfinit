@@ -7,7 +7,7 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             nom: document.getElementById("nom").value,
-            contrassenya: document.getElementById("contrasenya").value
+            contrasenya: document.getElementById("contrasenya").value
         })
     });
 
@@ -15,7 +15,7 @@
 
     // Si la resposta és correcta, redirigeix
     if (res.ok) {
-        window.location.href = "../view/historialLikes.php";
+        window.location.href = "../view/perfilUsuari.php";
     } else {
         document.getElementById("missatge-error").textContent = data.error;
     }
