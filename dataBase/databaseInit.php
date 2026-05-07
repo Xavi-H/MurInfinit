@@ -158,4 +158,4 @@ $contrasenya = md5('asd123');
 
 $db->exec("INSERT INTO usuaris (usuari, contrasenya) VALUES 
 ('Adan', '$contrasenya'),
-('Xavi', 'asd123')");
+('Xavi', '$contrasenya')");

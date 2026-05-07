@@ -14,7 +14,7 @@ $contrasenya = $input["contrasenya"]?? "";
 // Comprova que s'han enviat dades
 if($nom && $contrasenya) {
     // Consulta l'usuari per nom
-    $stmt = $db->prepare("SELECT * FROM usuaris WHERE nom = :nom");
+    $stmt = $db->prepare("SELECT * FROM usuaris WHERE usuari = :nom");
     $stmt->bindValue(":nom", $nom, SQLITE3_TEXT);
     $result = $stmt->execute();
     $usuari = $result->fetchArray(SQLITE3_ASSOC);
@@ -26,8 +26,7 @@ if($nom && $contrasenya) {
 
         // Es crea el payload amb dades i expiració
         $payload = base64_encode(json_encode([
-            "id" => $usuari["id"],
-            "nom" => $usuari["nom"],
+            "nom" => $usuari["usuari"], // Nom d'usuari
             "exp" => time() + 3600 // caduca en 1 hora
         ]));
         // Clau secreta per signar el token

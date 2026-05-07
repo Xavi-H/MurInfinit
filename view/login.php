@@ -11,19 +11,19 @@ include_once __DIR__ . '/../includes/header.php';
     <form class="formulari-edicio" id="form-login">
         <div class="camp">
             <label for="nom">Nom d'usuari:</label>
-            <input type="text" id="nom" name="nom">
+            <input type="text" id="nom" name="nom" required>
         </div>
         <div class="camp">
             <label for="contrasenya">Contrasenya:</label>
-            <input type="password" id="contrasenya" name="contrasenya">
+            <input type="password" id="contrasenya" name="contrasenya" required>
         </div>
         <div class="botons">
-            <button type="submit">Entrar</button>
+            <button type="submit" id="btn-login">Entrar</button>
         </div>
     </form>
 </div>
 
-<script src="../js/login.js"></script>
+<script src="../script/login.js"></script>
 <?php
 include_once __DIR__ . ("/../includes/footer.html");
 ?>
