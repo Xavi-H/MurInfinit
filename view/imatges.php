@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once __DIR__ . '/../controller/auth.php';
 $usuari = validarToken();
 
@@ -30,23 +31,25 @@ include_once __DIR__ . '/../includes/header.php';
             <img src="${data.img_url}" alt="${data.img_titol}" loading="lazy">
             <div class="imatge-info">
               <h2>${data.img_titol}</h2>
-              <p>Likes: ${data.num_likes}</p>
+              <p>Likes: <span id="num-likes">${data.num_likes}</span></p>
               <?php if(!$usuari): ?>
                 <p>Inicia sessió per a donar likes.<p>
                 <button disabled>Like</button>
-              <?php else: ?>
+              <?php elseif($usuari): ?>
                 <button id="btn-like">Like</button>
+              <?php else: ?>
+                <button id="btn-like" disabled>Like</button>
               <?php endif; ?>
             </div>
           </div>
         `;
       <?php if($usuari): ?>
-        document.getElementById('btn-like').addEventListener('click', () => {
-          const btn = this;
+        const btn = document.getElementById('btn-like');
+        btn.addEventListener('click', () => {
           btn.disabled = true;// evita doble click mentre es processa un
 
           fetch('../api/imatgesApi.php', {
-            method: 'PATH',
+            method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({id: id})
           })
@@ -56,7 +59,7 @@ include_once __DIR__ . '/../includes/header.php';
               document.getElementById('num-likes').textContent = res.num_likes;
               btn.textContent = 'Like donat!';
             }else {
-              alert('Error: ' + (res.error || "No s'ha pogut fer like"));
+              alert("Error: No s'ha pogut fer like");
               btn.disabled = false;
             }
           })

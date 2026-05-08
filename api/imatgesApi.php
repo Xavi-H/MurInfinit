@@ -57,7 +57,7 @@ switch($_SERVER['REQUEST_METHOD']) {
         }
         break;
 
-    case 'PATH':
+    case 'PATCH':
         $body = json_decode(file_get_contents('php://input'), true);
         $id = isset($body['id'])? (int)$body['id']: null;
 

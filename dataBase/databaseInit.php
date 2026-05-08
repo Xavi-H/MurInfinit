@@ -150,7 +150,7 @@ $db->exec("INSERT INTO imatges (img_titol, img_url, num_likes, par_clau) VALUES
 
 // Crear la taula imatges
 $db->exec("CREATE TABLE IF NOT EXISTS usuaris (
-    usuari TEXT,
+    usuari TEXT PRIMARY KEY,
     contrasenya TEXT
 )");
 
