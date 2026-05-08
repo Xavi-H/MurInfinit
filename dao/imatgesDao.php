@@ -4,10 +4,10 @@ function getImatges($limit, $offset, $db) {
     $stmt = $db->prepare($sql);
     $stmt->bindValue(':limit', (int)$limit, SQLITE3_INTEGER);
     $stmt->bindValue(':offset', (int)$offset, SQLITE3_INTEGER);
-    $result = $stmt->execute();
+    $resultat = $stmt->execute();
 
     $imatges = [];
-    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+    while ($row = $resultat->fetchArray(SQLITE3_ASSOC)) {
         $imatges[] = $row;
     }
     return $imatges;
@@ -17,8 +17,8 @@ function getImatgeById($id, $db) {
     $sql = "SELECT * FROM imatges WHERE id = :id";
     $stmt = $db->prepare($sql);
     $stmt->bindValue(':id', (int)$id, SQLITE3_INTEGER);
-    $result = $stmt->execute();
-    return $result->fetchArray(SQLITE3_ASSOC);
+    $resultat = $stmt->execute();
+    return $resultat->fetchArray(SQLITE3_ASSOC);
 }
 
 function valorarImatge($id, $estrelles, $db) {
@@ -43,13 +43,26 @@ function cercaImatgeAlVol($cerca, $db) {
     $consulta = "SELECT * FROM imatges WHERE LOWER(par_clau) LIKE LOWER(:cerca)";
     $stmt = $db->prepare($consulta);
     $stmt->bindValue(':cerca', "%$cerca%", SQLITE3_TEXT);
-    $result = $stmt->execute();
+    $resultat = $stmt->execute();
 
     $imatges = [];
-    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+    while ($row = $resultat->fetchArray(SQLITE3_ASSOC)) {
         $imatges[] = $row;
     }
     return $imatges;
+}
+
+function cercaTitolImatgeAlVol($cerca, $db) {
+    $consulta = "SELECT img_titol FROM imatges WHERE LOWER(img_titol) LIKE LOWER(:cerca) LIMIT 5";
+    $stmt = $db->prepare($consulta);
+    $stmt->bindValue(':cerca', "%$cerca%", SQLITE3_TEXT);
+    $resultat = $stmt->execute();
+
+    $titols = [];
+    while ($row = $resultat->fetchArray(SQLITE3_ASSOC)) {
+        $titols[] = $row['img_titol'];
+    }
+    return $titols;
 }
 
 function donarLike($id, $db) {

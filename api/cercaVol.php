@@ -7,7 +7,6 @@ header('Content-Type: application/json');
 switch($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         $busqueda = $_GET['busqueda'];
-//TODO
         $resultat = cercaTitolImatgeAlVol($busqueda, $db);
 
         if($resultat) {
