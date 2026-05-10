@@ -21,24 +21,6 @@ function getImatgeById($id, $db) {
     return $resultat->fetchArray(SQLITE3_ASSOC);
 }
 
-function valorarImatge($id, $estrelles, $db) {
-    $imatge = getImatgeById($id, $db);
-    if(!$imatge) return false;
-
-    $numVotacio = $imatge['num_votacio'] + 1;
-    $novaValoracio = (($imatge['valoracio'] * $imatge['num_votacio']) + $estrelles) / $numVotacio;
-    $novaValoracio = round($novaValoracio, 2);
-
-    $sql = "UPDATE imatges SET valoracio = :valoracio, num_votacio = :num_votacio WHERE id = :id";
-    $stmt = $db->prepare($sql);
-    $stmt->bindValue(':valoracio', $novaValoracio, SQLITE3_FLOAT);
-    $stmt->bindValue(':num_votacio', $numVotacio, SQLITE3_INTEGER);
-    $stmt->bindValue(':id', (int)$id, SQLITE3_INTEGER);
-    $stmt->execute();
-
-    return getImatgeById($id, $db);
-}
-
 function cercaImatgeAlVol($cerca, $db) {
     $consulta = "SELECT * FROM imatges WHERE LOWER(par_clau) LIKE LOWER(:cerca)";
     $stmt = $db->prepare($consulta);
@@ -97,5 +79,18 @@ function donarLikeUsuari($id_imatge, $usuari, $db) {
     $updateStmt->bindValue(':id', (int)$id_imatge, SQLITE3_INTEGER);
     $updateStmt->execute();
 
-    return getImatgeById($id_imatge, $db);
+    return getImatgeById($id_imatge, $db); // Retorna l'imatge actualitzada amb el nou num_likes
+}
+
+function getImatgesLikedByUser($username, $db) {
+    $sql = "SELECT i.* FROM imatges i JOIN likes l ON i.id = l.id_imatge WHERE l.usuari = :username";
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(':username', $username, SQLITE3_TEXT);
+    $resultat = $stmt->execute();
+ 
+    $imatges = [];
+    while ($row = $resultat->fetchArray(SQLITE3_ASSOC)) {
+        $imatges[] = $row;
+    }
+    return $imatges;
 }

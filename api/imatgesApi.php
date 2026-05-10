@@ -17,6 +17,10 @@ switch($_SERVER['REQUEST_METHOD']) {
                 http_response_code(404);
                 echo json_encode(['error' => "Imatge amb id $id no trobada"]);
             }
+        } elseif(isset($_GET['username'])) {
+            // imatges que ha donat like un usuari
+            $username = $_GET['username'];
+            echo json_encode(getImatgesLikedByUser($username, $db));
         } else {
             // totes les imatges
             $limit = isset($_GET['limit'])? (int)$_GET['limit']: 30;
