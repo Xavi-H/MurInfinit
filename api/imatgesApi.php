@@ -13,12 +13,11 @@ switch($_SERVER['REQUEST_METHOD']) {
 
             if($imatge) {
                 echo json_encode($imatge);
-            }else {
+            } else {
                 http_response_code(404);
                 echo json_encode(['error' => "Imatge amb id $id no trobada"]);
             }
-
-        }else {
+        } else {
             // totes les imatges
             $limit = isset($_GET['limit'])? (int)$_GET['limit']: 30;
             $offset = isset($_GET['offset'])? (int)$_GET['offset']: 0;
@@ -26,52 +25,32 @@ switch($_SERVER['REQUEST_METHOD']) {
         }
         break;
 
-    case 'POST':
+    case 'PATCH': // Dona like a una imatge per un usuari
         $body = json_decode(file_get_contents('php://input'), true);
+        $id      = isset($body['id'])       ? (int)$body['id']       : null;
+        $username = isset($body['username']) ? trim($body['username']) : null;
 
-        $id = isset($body['id'])? (int)$body['id']: null;
-        $estrelles = isset($body['estrelles'])? (float)$body['estrelles']: null;
-
-        // Seguretat en cas de curl o Postman
-        if($id === null || $estrelles === null) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Falten camps: id i estrelles (1-5)']);
-            exit;
-        }
-        if($estrelles < 1 || $estrelles > 5) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Les estrelles han de ser entre 1 i 5']);
-            exit;
-        }
-
-        $resultat = valorarImatge($id, $estrelles, $db);
-
-        if($resultat) {
-            echo json_encode([
-                'missatge' => 'Valoració guardada correctament',
-                'imatge' => $resultat
-            ]);
-        }else {
-            http_response_code(404);
-            echo json_encode(['error' => "Imatge amb id $id no trobada"]);
-        }
-        break;
-
-    case 'PATCH':
-        $body = json_decode(file_get_contents('php://input'), true);
-        $id = isset($body['id'])? (int)$body['id']: null;
-
+        // Validacions
         if($id === null) {
             http_response_code(400);
             echo json_encode(['error' => 'Falta el camp "id"']);
             exit;
         }
 
-        $resultat = donarLike($id, $db);
+        if(empty($username)) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Cal estar autenticat per donar like']);
+            exit;
+        }
 
-        if($resultat) {
+        $resultat = donarLikeUsuari($id, $username, $db);
+
+        if($resultat === 'ja_like') {
+            http_response_code(409);
+            echo json_encode(['error' => 'ja_like', 'missatge' => 'Ja has donat like a aquesta imatge']);
+        } elseif($resultat) {
             echo json_encode([
-                'missatge' => 'Like registrat correctament',
+                'missatge'  => 'Like registrat correctament',
                 'num_likes' => $resultat['num_likes']
             ]);
         } else {
