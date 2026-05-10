@@ -35,16 +35,16 @@ function cercaImatgeAlVol($cerca, $db) {
 }
 
 function cercaTitolImatgeAlVol($cerca, $db) {
-    $consulta = "SELECT img_titol FROM imatges WHERE LOWER(img_titol) LIKE LOWER(:cerca) LIMIT 5";
+    $consulta = "SELECT img_titol, id FROM imatges WHERE LOWER(img_titol) LIKE LOWER(:cerca) LIMIT 5";
     $stmt = $db->prepare($consulta);
     $stmt->bindValue(':cerca', "%$cerca%", SQLITE3_TEXT);
     $resultat = $stmt->execute();
 
-    $titols = [];
+    $img = [];
     while ($row = $resultat->fetchArray(SQLITE3_ASSOC)) {
-        $titols[] = $row['img_titol'];
+        $img[] = $row;
     }
-    return $titols;
+    return $img;
 }
 
 /**

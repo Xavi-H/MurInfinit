@@ -56,7 +56,7 @@ include_once __DIR__ . '/includes/header.php';
         ul.innerHTML = "";
         items.forEach(item => {
             const li = document.createElement("li");
-            li.textContent = item;
+            li.innerHTML = `<a href="/view/imatges.php?id=${item['id']}">${item['img_titol']}</a>`;
             ul.appendChild(li);
         });
     }
@@ -156,7 +156,7 @@ async function cercaVol(){
         mur.removeChild(divSenseCercar); // Esborra les imatges antigues
         mur.appendChild(div); // Afageix les noves
         });
-        
+
         // Afegir event listeners als botons de like acabats d'inserir
         if (usuariLogat) {
             const botons = mur.querySelectorAll('.btn-like:not([data-listener])');
