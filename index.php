@@ -19,8 +19,19 @@ include_once __DIR__ . '/includes/header.php';
 <form action="api/cercaVol.php" method="POST" id="cerca-form">
     <textarea name="cerca" id="cerca" placeholder="🔍 Comença a buscar..."></textarea>
     <ul id="suggestions"></ul>
-    <button type="submit">Enviar</button>
+    <label for="filtre">Filtra per:</label>
+    <select id="filtre" name="filtre">
+        <option value="senseFiltre">Sense filtre</option>
+        <option value="naturaleza">Naturalesa</option>
+        <option value="tecnologia">Tecnología</option>
+        <option value="comida">Menjar</option>
+        <option value="arquitectura">Arquitectura</option>
+        <option value="animales">Animals</option>
+        <option value="viajes">Viatges</option>
+    </select>
+    <input type="submit" value="Enviar">
 </form>
+
 <main>
     <div id="mur" class="mur"></div>
 
